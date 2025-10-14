@@ -10,16 +10,17 @@ use Kirby\Toolkit\Str;
 Kirby::plugin('ajk/force-login', [
     'hooks' => [
         'route:before' => function () {
-            // Skip if a user is logged in
             if (kirby()->user()) {
                 return;
             }
 
             $panelUrl = Panel::url();
-            $path = Url::current();
-            $isPanelUrl = Str::startsWith($path, $panelUrl);
+            $currentUrl = Url::current();
+            $isPanelUrl = Str::startsWith($currentUrl, $panelUrl);
 
-            if ($isPanelUrl) {
+            $isApiUrl = Str::startsWith(Url::path(), 'api', true );
+
+            if ($isPanelUrl || $isApiUrl) {
                 return;
             }
 
