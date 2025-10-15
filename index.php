@@ -8,13 +8,13 @@ use Kirby\Cms\Url;
 use Kirby\Panel\Panel;
 use Kirby\Toolkit\Str;
 
-Kirby::plugin('ajk/force-login', [
+Kirby::plugin('andrekelling/force-login', [
     'options' => array(
         'is-active'         => false,
     ),
     'hooks' => [
         'route:before' => function () {
-            $isActive = kirby()->option('ajk.force-login.is-active');
+            $isActive = kirby()->option('andrekelling.force-login.is-active');
             if (!$isActive) {
                 return;
             }
@@ -35,7 +35,7 @@ Kirby::plugin('ajk/force-login', [
             go($panelUrl.'/login?redirectAfterLogin=' . urlencode(kirby()->request()->path()));
         },
         'route:after' => function () {
-            $isActive = kirby()->option('ajk.force-login.is-active');
+            $isActive = kirby()->option('andrekelling.force-login.is-active');
             if (!$isActive) {
                 return;
             }
