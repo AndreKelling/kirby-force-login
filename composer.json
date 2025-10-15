@@ -1,0 +1,13 @@
+{
+  "name": "ajk/kirby-force-login",
+  "description": "Force Login",
+  "license": "MIT",
+  "type": "kirby-plugin",
+  "version": "0.0.1",
+  "authors": [
+    {
+      "name": "André Kelling",
+      "email": "kotnakt@andrekelling.de"
+    }
+  ]
+}
