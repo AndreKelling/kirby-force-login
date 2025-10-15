@@ -9,8 +9,15 @@ use Kirby\Panel\Panel;
 use Kirby\Toolkit\Str;
 
 Kirby::plugin('ajk/force-login', [
+    'options' => array(
+        'is-active'         => false,
+    ),
     'hooks' => [
         'route:before' => function () {
+            $isActive = kirby()->option('ajk.force-login.is-active');
+            if (!$isActive) {
+                return;
+            }
             if (kirby()->user()) {
                 return;
             }
@@ -28,6 +35,10 @@ Kirby::plugin('ajk/force-login', [
             go($panelUrl.'/login?redirectAfterLogin=' . urlencode(kirby()->request()->path()));
         },
         'route:after' => function () {
+            $isActive = kirby()->option('ajk.force-login.is-active');
+            if (!$isActive) {
+                return;
+            }
             if (!kirby()->user()) {
                 return;
             }
