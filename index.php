@@ -1,6 +1,7 @@
 <?php
 /**
  * force login to kirby
+ * and redirect to the origin path location
  */
 
 use Kirby\Cms\Url;
@@ -24,7 +25,16 @@ Kirby::plugin('ajk/force-login', [
                 return;
             }
 
-            go($panelUrl.'/login');
+            go($panelUrl.'/login?redirectAfterLogin=' . urlencode(kirby()->request()->path()));
+        },
+        'route:after' => function () {
+            if (!kirby()->user()) {
+                return;
+            }
+            $query = kirby()->request()->query()->data();
+            if (array_key_exists('redirectAfterLogin', $query)) {
+                go($query['redirectAfterLogin']);
+            }
         }
     ]
 ]);
