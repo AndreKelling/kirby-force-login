@@ -33,11 +33,15 @@ Kirby::plugin('andrekelling/force-login', [
             if ($resolveIsActive() !== true) {
                 return;
             }
-            if (kirby()->user()) {
-                return;
+            $kirby = kirby();
+            if ($kirby->user()) {
+              return;
             }
 
-            $panelUrl = Panel::url();
+            // breaking change v6: Kirby\Panel\Panel and their methods are non-static.
+            $panelUrl = method_exists($kirby, 'panel')
+              ? $kirby->panel()->url()
+              : Panel::url();
             $currentUrl = Url::current();
             $isPanelUrl = Str::startsWith($currentUrl, $panelUrl);
 
